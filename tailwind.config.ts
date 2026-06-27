@@ -5,15 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#162033",
-        panel: "#ffffff",
-        cyanGlow: "#38bdf8",
-        violetGlow: "#a78bfa",
-        action: "#22c55e",
+        ink: "#172033",
+        action: "#33C98F",
       },
       boxShadow: {
-        glow: "0 18px 48px rgba(56, 189, 248, 0.18)",
-        action: "0 16px 34px rgba(34, 197, 94, 0.22)",
+        glow: "0 24px 70px rgba(59, 130, 246, 0.16)",
+        soft: "0 16px 40px rgba(15, 23, 42, 0.08)",
+        action: "0 16px 34px rgba(51, 201, 143, 0.28)",
       },
     },
   },

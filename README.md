@@ -1,58 +1,41 @@
 # AI人生設計図
 
-スマホファーストの未来ロードマップ診断アプリです。
+無料診断から「あなた専用ロードマップ」へつなぎ、ロードマップ内で自然に無料相談・無料診断を案内するNext.jsアプリです。
 
-## 公開URLにする方法
+## 主要ページ
 
-おすすめは Vercel への公開です。
+- `/` 無料診断
+- `/roadmap/market-value` 市場価値アップタイプ
+- `/roadmap/ai-skill` AI活用スタートタイプ
+- `/roadmap/side-business` 副業チャレンジタイプ
+- `/roadmap/career` キャリア整理タイプ
+- `/roadmap/stability` 安定スキルアップタイプ
 
-1. このプロジェクトを GitHub にアップロードする
-2. Vercel で `Add New Project` からこのリポジトリを選ぶ
-3. Framework Preset は `Next.js` のままで進める
-4. 必要なアフィリエイトURLを Environment Variables に入力する
-5. `Deploy` を押す
+## 外部リンクURL設定
 
-公開後は Vercel が `https://xxxx.vercel.app` のようなURLを発行します。
-独自ドメインを使う場合は、Vercel の `Domains` から追加できます。
+Vercelなどの公開先で、Environment Variablesに以下を入力してください。
 
-## アフィリエイトURLの入力欄
-
-Vercel の `Settings` → `Environment Variables` に、以下の名前でURLを入力します。
-
-| 変数名 | 使われる場所 |
-| --- | --- |
-| `NEXT_PUBLIC_AFFILIATE_CAREER_AGENT_URL` | 市場価値アップタイプ |
-| `NEXT_PUBLIC_AFFILIATE_AI_SCHOOL_URL` | AI活用スタートタイプ |
-| `NEXT_PUBLIC_AFFILIATE_SIDE_BUSINESS_URL` | 副業チャレンジタイプ |
-| `NEXT_PUBLIC_AFFILIATE_COACHING_URL` | 働き方アップデートタイプ |
-| `NEXT_PUBLIC_AFFILIATE_QUALIFICATION_URL` | 安定スキルアップタイプ |
-| `NEXT_PUBLIC_AFFILIATE_ROADMAP_URL` | キャリア整理タイプ |
-
-`NEXT_PUBLIC_AFFILIATE_ROADMAP_URL` が未入力の場合は、`NEXT_PUBLIC_AFFILIATE_COACHING_URL` が使われます。
-
-URLを変更したら、Vercel で再デプロイすると公開ページに反映されます。
-
-## ローカルでURLを試す方法
-
-`.env.example` を `.env.local` にコピーして、各URLを入力します。
-
-```bash
-cp .env.example .env.local
+```env
+NEXT_PUBLIC_AFFILIATE_CAREER_AGENT_URL=
+NEXT_PUBLIC_AFFILIATE_AI_SCHOOL_URL=
+NEXT_PUBLIC_AFFILIATE_SIDE_BUSINESS_URL=
+NEXT_PUBLIC_AFFILIATE_COACHING_URL=
+NEXT_PUBLIC_AFFILIATE_QUALIFICATION_URL=
+NEXT_PUBLIC_AFFILIATE_BOOKS_URL=
 ```
 
-その後、開発サーバーを起動します。
+診断結果画面のCTAは外部URLへ直接飛ばず、必ず `/roadmap/[type]` に移動します。
+外部リンクはロードマップ内の各STEPボタンだけに配置しています。
 
-```bash
-pnpm dev
-```
+## クリック計測
 
-未設定のURLがある状態でCTAを押すと、リンク先未設定の案内が表示されます。
+現在は `lib/tracking.ts` の `trackAffiliateClick()` で `console.log` しています。
+後でGA4などに差し替える場合は、この関数だけ変更してください。
 
-## 開発コマンド
+## 開発
 
 ```bash
 pnpm install
 pnpm dev
 pnpm build
-pnpm start
 ```
