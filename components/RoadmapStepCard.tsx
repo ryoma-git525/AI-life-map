@@ -29,32 +29,41 @@ export function RoadmapStepCard({ step, roadmapType }: { step: RankedRoadmapStep
       <Section title="このSTEPをおすすめする理由" items={[step.reason]} />
       <Section title="このSTEPで分かること" items={step.benefits} />
       <Section title="こんな人におすすめ" items={step.recommendedFor} />
+      <Section title="将来的な選択肢" items={step.futureOptions} />
 
       <div className="mt-5 rounded-3xl bg-gradient-to-br from-sky-50 to-violet-50 p-4">
         <p className="text-xs font-black text-sky-700">診断結果から見たポイント</p>
         <p className="mt-2 text-sm font-bold leading-7 text-slate-700">{step.stepComment}</p>
       </div>
 
-      <p className="mt-4 rounded-2xl border border-sky-100 bg-sky-50/70 p-4 text-xs font-bold leading-6 text-slate-600">
-        ここから先は情報を見るだけでも大丈夫です。申し込みや相談をするかどうかは、内容を見てから判断できます。
-      </p>
+      {step.url && step.cta ? (
+        <>
+          <p className="mt-4 rounded-2xl border border-sky-100 bg-sky-50/70 p-4 text-xs font-bold leading-6 text-slate-600">
+            ここから先は情報を見るだけでも大丈夫です。申し込みや相談をするかどうかは、内容を見てから判断できます。
+          </p>
 
-      <a
-        href={step.url}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        onClick={() =>
-          trackAffiliateClick({
-            roadmapType,
-            stepCategory: step.id,
-            stepTitle: step.title,
-            targetUrl: step.url,
-          })
-        }
-        className="mt-5 block rounded-2xl bg-gradient-to-r from-emerald-400 to-sky-500 px-5 py-4 text-center text-sm font-black text-white shadow-action transition hover:-translate-y-0.5"
-      >
-        {step.cta}
-      </a>
+          <a
+            href={step.url}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            onClick={() =>
+              trackAffiliateClick({
+                roadmapType,
+                stepCategory: step.id,
+                stepTitle: step.title,
+                targetUrl: step.url ?? "",
+              })
+            }
+            className="mt-5 block rounded-2xl bg-gradient-to-r from-emerald-400 to-sky-500 px-5 py-4 text-center text-sm font-black text-white shadow-action transition hover:-translate-y-0.5"
+          >
+            {step.cta}
+          </a>
+        </>
+      ) : (
+        <p className="mt-4 rounded-2xl border border-slate-100 bg-slate-50 p-4 text-xs font-bold leading-6 text-slate-600">
+          このSTEPは、申し込みではなく整理のための行動です。気になる内容だけ、自分のペースで見てみてください。
+        </p>
+      )}
     </article>
   );
 }

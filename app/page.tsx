@@ -5,6 +5,7 @@ import { getRoadmapPathForResult } from "@/lib/resultRoadmap";
 
 type ResultKey = "career_agent" | "ai_school" | "side_business" | "roadmap" | "qualification";
 type ScoreKey = ResultKey | "money" | "growth" | "freedom" | "stability" | "lost";
+type PlanStep = "career_agent" | "side_business" | "learn_ai" | "read_books" | "organize_options";
 
 type Option = {
   label: string;
@@ -25,41 +26,93 @@ type Result = {
 
 const questions: { title: string; options: Option[] }[] = [
   {
-    title: "今の生活で一番モヤモヤすることは？",
+    title: "今いちばん気になっていることは？",
     options: [
-      { label: "給料がなかなか増えない", scores: { career_agent: 2, money: 2 } },
-      { label: "将来どうなるか不安", scores: { roadmap: 2, stability: 1 } },
-      { label: "やりたいことがわからない", scores: { roadmap: 2, lost: 2 } },
-      { label: "会社に依存しない働き方をしたい", scores: { side_business: 2, freedom: 1 } },
+      { label: "今の年収や評価が妥当か知りたい", scores: { career_agent: 3, money: 2 } },
+      { label: "会社以外の収入源を作りたい", scores: { side_business: 3, freedom: 2 } },
+      { label: "転職するべきか迷っている", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "副業に興味はあるが何から始めるか分からない", scores: { side_business: 2, lost: 1 } },
     ],
   },
   {
-    title: "理想の未来に近いものは？",
+    title: "収入を増やすなら、どちらが今の気持ちに近い？",
     options: [
-      { label: "年収を上げたい", scores: { career_agent: 2, money: 2 } },
-      { label: "AIを使って仕事に活かしたい", scores: { ai_school: 3, growth: 1 } },
-      { label: "副業で小さく収入を作りたい", scores: { side_business: 3, freedom: 1 } },
-      { label: "安定しながらスキルを増やしたい", scores: { qualification: 3, stability: 2 } },
+      { label: "本業の年収アップを狙いたい", scores: { career_agent: 3, money: 2 } },
+      { label: "副業で月数万円を目指したい", scores: { side_business: 3, freedom: 1 } },
+      { label: "まず自分の可能性を客観的に知りたい", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "小さく試せる収入源を探したい", scores: { side_business: 2, growth: 1 } },
     ],
   },
   {
-    title: "今の自分に必要だと感じるものは？",
+    title: "今の仕事について、近い感覚は？",
     options: [
-      { label: "外の市場価値を知ること", scores: { career_agent: 3 } },
-      { label: "AIや新しいスキル", scores: { ai_school: 3, growth: 1 } },
-      { label: "会社以外の選択肢", scores: { side_business: 3 } },
-      { label: "選択肢を整理すること", scores: { roadmap: 3, lost: 1 } },
-      { label: "資格や専門スキル", scores: { qualification: 3, stability: 1 } },
+      { label: "もっと評価されてもいい気がする", scores: { career_agent: 3, money: 1 } },
+      { label: "今の会社だけに頼るのは少し不安", scores: { side_business: 3, stability: 1 } },
+      { label: "仕事内容や環境を変えたい気持ちがある", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "本業は続けながら別の可能性も見たい", scores: { side_business: 2, stability: 1 } },
     ],
   },
   {
-    title: "次に見てみたい情報は？",
+    title: "最初に知れると安心する情報は？",
     options: [
-      { label: "転職するかどうかの判断材料", scores: { career_agent: 2 } },
-      { label: "AIを仕事で使う方法", scores: { ai_school: 2 } },
-      { label: "自分に合う副業", scores: { side_business: 2 } },
-      { label: "キャリア相談や整理", scores: { roadmap: 2 } },
-      { label: "将来に強い資格や講座", scores: { qualification: 2 } },
+      { label: "自分の市場価値や適正年収", scores: { career_agent: 3 } },
+      { label: "自分に合う副業の種類", scores: { side_business: 3 } },
+      { label: "転職すべきか残るべきか", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "本業と副業を両立する方法", scores: { side_business: 2, growth: 1 } },
+    ],
+  },
+  {
+    title: "今すぐ大きく変えることへの抵抗感は？",
+    options: [
+      { label: "抵抗はあるので、まず情報を集めたい", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "小さく始められるなら試したい", scores: { side_business: 2, growth: 1 } },
+      { label: "良い条件があれば転職も考えたい", scores: { career_agent: 3 } },
+      { label: "会社を辞めずに選択肢を増やしたい", scores: { side_business: 3, stability: 1 } },
+    ],
+  },
+  {
+    title: "平日や休日に使える時間は？",
+    options: [
+      { label: "あまり時間がないので、まず相談で整理したい", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "週に数時間なら副業準備に使えそう", scores: { side_business: 3 } },
+      { label: "求人や年収相場を見る時間は取れそう", scores: { career_agent: 2 } },
+      { label: "学びながら少しずつ収入源を作りたい", scores: { side_business: 2, growth: 1 } },
+    ],
+  },
+  {
+    title: "将来の不安に近いものは？",
+    options: [
+      { label: "今の会社で年収が上がるか不安", scores: { career_agent: 3, money: 1 } },
+      { label: "収入源が一つだけなのが不安", scores: { side_business: 3, stability: 1 } },
+      { label: "自分のスキルが外で通用するか不安", scores: { career_agent: 2, qualification: 1 } },
+      { label: "副業や新しい働き方に乗り遅れそうで不安", scores: { side_business: 2, ai_school: 1 } },
+    ],
+  },
+  {
+    title: "相談するとしたら、何を相談したい？",
+    options: [
+      { label: "今の経験でどんな会社を狙えるか", scores: { career_agent: 3 } },
+      { label: "自分に合う副業や始め方", scores: { side_business: 3 } },
+      { label: "転職した場合の年収や働き方", scores: { career_agent: 2, money: 1 } },
+      { label: "副業で何から学ぶべきか", scores: { side_business: 2, growth: 1 } },
+    ],
+  },
+  {
+    title: "半年後、どうなっていたら嬉しい？",
+    options: [
+      { label: "自分の市場価値を知って、落ち着いて判断できている", scores: { career_agent: 3, roadmap: 1 } },
+      { label: "小さな副業の準備が始まっている", scores: { side_business: 3 } },
+      { label: "今の会社に残るか転職するか整理できている", scores: { career_agent: 2 } },
+      { label: "会社以外の選択肢が見えている", scores: { side_business: 2, freedom: 1 } },
+    ],
+  },
+  {
+    title: "最後に、今いちばん近い気持ちは？",
+    options: [
+      { label: "まず外の評価を知って安心したい", scores: { career_agent: 3 } },
+      { label: "まず副業という選択肢を知りたい", scores: { side_business: 3 } },
+      { label: "今後の働き方を整理したい", scores: { career_agent: 2, roadmap: 1 } },
+      { label: "収入の柱を増やす準備をしたい", scores: { side_business: 2, stability: 1 } },
     ],
   },
 ];
@@ -70,7 +123,7 @@ const results: Record<ResultKey, Result> = {
     name: "市場価値アップタイプ",
     essence: "今の会社だけで自分を判断するのは少しもったいない人です。",
     oneLine: "まずは外の市場でどう見られるかを知ると、未来の選択肢が広がりやすくなります。",
-    firstStep: "市場価値を知る",
+    firstStep: "転職無料相談で市場価値を知る",
     traits: ["慎重に判断したい", "収入や働き方を見直したい", "比較材料があると動きやすい"],
     strengths: ["現実的に考えられる", "自分の可能性を広げようとしている", "納得して選べる"],
     keywords: ["挑戦", "収入", "選択"],
@@ -78,10 +131,10 @@ const results: Record<ResultKey, Result> = {
   },
   ai_school: {
     key: "ai_school",
-    name: "AI活用スタートタイプ",
-    essence: "これからの仕事で使える武器を一つ持つと、前に進みやすい人です。",
-    oneLine: "AIを学ぶことで、仕事・副業・転職の選択肢が少しずつ広がる可能性があります。",
-    firstStep: "AIを学ぶ",
+    name: "選択肢アップデートタイプ",
+    essence: "新しい収入源や働き方を知ると、前に進みやすい人です。",
+    oneLine: "まず副業スクールで選択肢を知ると、今の仕事を続けながら未来の幅を広げやすくなります。",
+    firstStep: "副業スクールで選択肢を増やす",
     traits: ["新しいことを学ぶ意欲がある", "効率化やスキルアップに関心がある", "未来に備えたい"],
     strengths: ["学ぶ意欲がある", "時代の変化に気づける", "小さく試せる"],
     keywords: ["学び", "成長", "未来"],
@@ -91,8 +144,8 @@ const results: Record<ResultKey, Result> = {
     key: "side_business",
     name: "副業チャレンジタイプ",
     essence: "会社だけに頼らず、安心できる未来を小さく育てたい人です。",
-    oneLine: "まず自分に合う副業を知るだけでも、将来への不安は少し整理しやすくなります。",
-    firstStep: "副業を知る",
+    oneLine: "まず副業スクールで選択肢を知るだけでも、将来への不安は少し整理しやすくなります。",
+    firstStep: "副業スクールで選択肢を増やす",
     traits: ["会社以外の収入に関心がある", "無理なく始めたい", "自由度を少し増やしたい"],
     strengths: ["選択肢を増やそうとしている", "小さく挑戦できる", "生活を大切にできる"],
     keywords: ["自由", "安心", "収入"],
@@ -102,8 +155,8 @@ const results: Record<ResultKey, Result> = {
     key: "roadmap",
     name: "キャリア整理タイプ",
     essence: "迷っているのではなく、選択肢が多すぎるだけかもしれない人です。",
-    oneLine: "今は急いで決めるより、転職・副業・学習の順番を整理することが大切です。",
-    firstStep: "キャリアを整理する",
+    oneLine: "まず転職無料相談で市場価値を知ると、今後の選択肢を整理しやすくなります。",
+    firstStep: "転職無料相談で市場価値を知る",
     traits: ["自分に合う道をちゃんと見つけたい", "情報を集めてから判断したい", "納得感を大切にしたい"],
     strengths: ["丁寧に考えられる", "自分の人生を大切にしている", "整理すれば行動できる"],
     keywords: ["整理", "納得", "選択"],
@@ -113,8 +166,8 @@ const results: Record<ResultKey, Result> = {
     key: "qualification",
     name: "安定スキルアップタイプ",
     essence: "今の生活を守りながら、着実に未来の幅を広げたい人です。",
-    oneLine: "資格や専門スキルを知ることで、安心感を保ちながら選択肢を増やしやすくなります。",
-    firstStep: "安定スキルを身につける",
+    oneLine: "まず市場価値を知ることで、どんな準備が安心につながるか整理しやすくなります。",
+    firstStep: "転職無料相談で市場価値を知る",
     traits: ["安定を大切にしたい", "無理なく準備したい", "長く使えるスキルに関心がある"],
     strengths: ["継続を大切にできる", "リスクを見ながら判断できる", "着実に準備できる"],
     keywords: ["安定", "学び", "準備"],
@@ -124,7 +177,7 @@ const results: Record<ResultKey, Result> = {
 
 const resultKeys: ResultKey[] = ["career_agent", "ai_school", "side_business", "roadmap", "qualification"];
 
-function calculateResult(answers: number[]) {
+function calculateScores(answers: number[]) {
   const scores: Record<string, number> = {};
 
   answers.forEach((answer, questionIndex) => {
@@ -135,8 +188,36 @@ function calculateResult(answers: number[]) {
     });
   });
 
+  return scores;
+}
+
+function calculateResult(scores: Record<string, number>) {
   const resultKey = resultKeys.reduce<ResultKey>((best, key) => ((scores[key] ?? 0) > (scores[best] ?? 0) ? key : best), "roadmap");
   return results[resultKey];
+}
+
+function getPersonalRoadmapPlan(scores: Record<string, number>): PlanStep[] {
+  const careerScore = scores.career_agent ?? 0;
+  const sideScore = scores.side_business ?? 0;
+  const needsOrganizing = (scores.roadmap ?? 0) + (scores.lost ?? 0) >= Math.max(careerScore, sideScore);
+  const prefersLearning = (scores.ai_school ?? 0) + (scores.growth ?? 0) >= 3;
+  const prefersStability = (scores.qualification ?? 0) + (scores.stability ?? 0) >= 4;
+  const plan: PlanStep[] = [];
+
+  if (needsOrganizing) plan.push("organize_options");
+  if (prefersStability && careerScore <= sideScore + 1) plan.push("read_books");
+  if (prefersLearning && sideScore >= careerScore - 1) plan.push("learn_ai");
+
+  if (sideScore > careerScore + 1) {
+    plan.push("side_business", "career_agent");
+  } else {
+    plan.push("career_agent", "side_business");
+  }
+
+  if (prefersLearning && !plan.includes("learn_ai")) plan.push("learn_ai");
+  if (!plan.includes("read_books")) plan.push("read_books");
+
+  return plan.filter((step, index) => plan.indexOf(step) === index).slice(0, 4);
 }
 
 export default function Home() {
@@ -146,8 +227,10 @@ export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
   const currentQuestion = answers.length;
   const complete = answers.length === questions.length && !analyzing;
-  const result = useMemo(() => calculateResult(answers), [answers]);
-  const roadmapPath = getRoadmapPathForResult(result.key);
+  const scores = useMemo(() => calculateScores(answers), [answers]);
+  const result = useMemo(() => calculateResult(scores), [scores]);
+  const roadmapPlan = useMemo(() => getPersonalRoadmapPlan(scores), [scores]);
+  const roadmapPath = `${getRoadmapPathForResult(result.key)}?plan=${roadmapPlan.join(",")}`;
   const progress = complete ? 100 : Math.round((answers.length / questions.length) * 100);
 
   function choose(index: number) {
@@ -199,9 +282,11 @@ export default function Home() {
                 “未来の選択肢”がわかる
               </h1>
               <p className="mt-5 text-base font-bold leading-8 text-slate-700">
-                転職するべき？AIを学ぶべき？副業を始めるべき？
+                転職相談で市場価値を知るべき？
                 <br />
-                今の状況と理想の未来から、あなたに合う行動ルートを無料で診断します。
+                副業スクールで選択肢を増やすべき？
+                <br />
+                今の状況と理想の未来から、あなたに合う最初の一歩を無料で診断します。
               </p>
               <button
                 type="button"

@@ -1,103 +1,83 @@
 import type { RoadmapStep, StepCategory } from "@/types/roadmap";
 
-const affiliateUrls: Record<StepCategory, string> = {
+const serviceUrls: Record<"career_agent" | "side_business", string> = {
   career_agent: process.env.NEXT_PUBLIC_AFFILIATE_CAREER_AGENT_URL ?? "https://example.com/career-agent",
-  ai_school: process.env.NEXT_PUBLIC_AFFILIATE_AI_SCHOOL_URL ?? "https://example.com/ai-school",
   side_business: process.env.NEXT_PUBLIC_AFFILIATE_SIDE_BUSINESS_URL ?? "https://example.com/side-business",
-  career_coaching: process.env.NEXT_PUBLIC_AFFILIATE_COACHING_URL ?? "https://example.com/career-coaching",
-  qualification: process.env.NEXT_PUBLIC_AFFILIATE_QUALIFICATION_URL ?? "https://example.com/qualification",
-  books: process.env.NEXT_PUBLIC_AFFILIATE_BOOKS_URL ?? "https://example.com/books",
 };
 
 export const roadmapSteps: Record<StepCategory, RoadmapStep> = {
   career_agent: {
     id: "career_agent",
-    title: "市場価値を知る",
+    title: "転職無料相談で市場価値を知る",
     time: "約3分",
-    cost: "無料で確認可能",
-    cta: "無料で市場価値を診断する",
-    url: affiliateUrls.career_agent,
+    cost: "無料相談・無料診断",
+    cta: "無料で市場価値を相談する",
+    url: serviceUrls.career_agent,
     description:
-      "今の自分が市場でどう評価されるかを知ることで、転職するかどうかを落ち着いて判断しやすくなります。",
-    purpose: "今の自分が市場でどう評価されるか知る",
-    benefits: ["適正年収の目安", "向いている企業や職種", "今の市場価値", "転職すべきかの判断材料"],
-    recommendedFor: ["今の年収や評価にモヤモヤがある", "転職するかはまだ決めきれていない", "まず客観的な材料がほしい"],
+      "今の自分が外の市場でどう見られるかを知ることで、転職するかどうかを落ち着いて判断しやすくなります。",
+    purpose: "転職するかを決める前に、自分の市場価値を知る",
+    benefits: ["適正年収の目安", "今の経験が活かせる職種", "転職すべきかの判断材料", "今の会社に残る場合の比較軸"],
+    recommendedFor: ["年収や評価にモヤモヤがある", "転職するかはまだ決めきれていない", "まず客観的な材料がほしい"],
     reason:
-      "転職する・しないを決める前に、外の基準を知っておくと、今の仕事を続ける場合も次に動く場合も判断しやすくなります。",
-  },
-  ai_school: {
-    id: "ai_school",
-    title: "AIを学ぶ",
-    time: "約10分",
-    cost: "無料情報あり",
-    cta: "無料でAI学習について見る",
-    url: affiliateUrls.ai_school,
-    description:
-      "AIを仕事や副業で使えるようになると、作業効率・収入源・転職の選択肢が広がる可能性があります。",
-    purpose: "これからの仕事で使えるAI活用の入口を知る",
-    benefits: ["AIでできること", "仕事での活用例", "学ぶ順番", "副業や転職への活かし方"],
-    recommendedFor: ["AIに興味はあるけど何から始めるか迷う", "今の仕事の効率を上げたい", "将来に使えるスキルを持ちたい"],
-    reason:
-      "生成AIの使い方を知っておくと、仕事・副業・転職の判断材料にもなります。最初に使い方を知ると、選べる未来が増えやすくなります。",
+      "最初に市場価値を知っておくと、転職だけでなく副業や学習を選ぶ場合も、今の自分に必要な準備が見えやすくなります。",
+    futureOptions: ["必要ならAI学習で仕事の効率を上げる", "資格や専門スキルで市場価値を補強する", "本で転職や働き方の考え方を整理する"],
   },
   side_business: {
     id: "side_business",
-    title: "副業を知る",
+    title: "副業スクールで選択肢を増やす",
     time: "約5分",
-    cost: "無料診断あり",
+    cost: "無料相談・無料診断",
     cta: "無料で副業について相談する",
-    url: affiliateUrls.side_business,
+    url: serviceUrls.side_business,
     description:
-      "会社以外の収入源を小さく作ることで、将来への不安を減らしやすくなります。",
-    purpose: "自分に合う副業の選択肢を知る",
-    benefits: ["向いている副業ジャンル", "月数万円を目指す流れ", "本業と両立する考え方", "無料で始める入口"],
-    recommendedFor: ["会社以外の収入源に興味がある", "いきなり大きく始めるのは不安", "生活の安心感を少し増やしたい"],
+      "会社以外の収入源を小さく作る選択肢を知ることで、今すぐ転職しなくても将来への安心感を増やしやすくなります。",
+    purpose: "会社以外の収入源を作る入口を知る",
+    benefits: ["自分に合う副業ジャンル", "月数万円を目指す流れ", "本業と両立する考え方", "副業を始める前の注意点"],
+    recommendedFor: ["会社だけに頼ることに不安がある", "副業に興味はあるが何から始めるか迷う", "まず小さく選択肢を増やしたい"],
     reason:
-      "副業は大きく稼ぐことより、自分に合う選択肢を知るところから始めると続けやすくなります。",
+      "副業は大きく稼ぐことより、自分に合う選択肢を知るところから始めると続けやすくなります。今の働き方を変えずに、未来の余白を作りやすい一歩です。",
+    futureOptions: ["生成AIを使って作業効率を上げる", "必要な資格や専門スキルを後から学ぶ", "本でお金や副業の基礎を整理する"],
   },
-  career_coaching: {
-    id: "career_coaching",
-    title: "キャリアを整理する",
+  learn_ai: {
+    id: "learn_ai",
+    title: "生成AIでできることを知る",
+    time: "約10分",
+    cost: "無料情報からでOK",
+    description:
+      "すぐに講座へ申し込む必要はありません。まず、仕事や副業で生成AIをどう使えるのかを知るだけでも、選択肢の見え方が変わります。",
+    purpose: "仕事・副業・学習に使える道具を知る",
+    benefits: ["仕事の効率化のヒント", "副業に活かせる作業の例", "今後学ぶべきことの整理"],
+    recommendedFor: ["新しいスキルに関心がある", "副業や転職の前に準備したい", "まず情報収集から始めたい"],
+    reason:
+      "生成AIは転職先を決めるものでも、副業を始めるものでもありません。ただ、選択肢を広げるための道具として知っておくと、次の判断がしやすくなります。",
+    futureOptions: ["必要なら副業スクールで実践方法を相談する", "市場価値を確認して仕事への活かし方を考える", "本や無料記事で基礎を整理する"],
+  },
+  read_books: {
+    id: "read_books",
+    title: "本や無料情報で考え方を整理する",
+    time: "約15分",
+    cost: "低コスト・無料情報からでOK",
+    description:
+      "まだ相談や診断に進む気持ちが強くない場合は、まず本や無料情報で考え方を整理するだけでも十分です。",
+    purpose: "焦らず自分のペースで判断材料を増やす",
+    benefits: ["キャリアやお金の考え方", "副業を始める前の注意点", "転職相談前に整理しておくこと"],
+    recommendedFor: ["まだ申し込みや相談には抵抗がある", "まず自分で考えたい", "情報を整理してから動きたい"],
+    reason:
+      "今すぐ誰かに相談するより、自分の中で考えを整える時間が役に立つ場合があります。小さく情報を入れるだけでも、次の一歩は選びやすくなります。",
+    futureOptions: ["必要だと感じたら市場価値を相談する", "副業への関心が強くなったらスクールで相談する", "生成AIや資格などの学びを検討する"],
+  },
+  organize_options: {
+    id: "organize_options",
+    title: "転職と副業の優先順位を整理する",
     time: "約5分",
-    cost: "無料相談あり",
-    cta: "無料相談してみる",
-    url: affiliateUrls.career_coaching,
+    cost: "無料でできる",
     description:
-      "転職・副業・学習のどれを優先すべきか迷っている場合は、まず方向性を整理すると動きやすくなります。",
-    purpose: "転職・副業・学習の優先順位を整理する",
-    benefits: ["自分に合う働き方", "今やるべきこと", "後回しでいいこと", "相談するかの判断材料"],
-    recommendedFor: ["選択肢が多くて決めきれない", "一人で考えると堂々巡りになる", "納得してから動きたい"],
+      "転職と副業のどちらが正解かをすぐに決める必要はありません。まず、今の悩みが収入・働き方・時間・安心感のどれに近いか整理します。",
+    purpose: "自分に合う順番を決める前の準備をする",
+    benefits: ["今の悩みの整理", "転職向きか副業向きかの仮説", "相談前に確認したいこと"],
+    recommendedFor: ["選択肢が多くて決めきれない", "いきなり外部サービスへ進むのは早いと感じる", "まず頭の中を整理したい"],
     reason:
-      "迷っている時ほど、情報を増やす前に選択肢を並べることが役に立ちます。順番が見えると、一歩目が軽くなります。",
-  },
-  qualification: {
-    id: "qualification",
-    title: "安定スキルを身につける",
-    time: "約5分",
-    cost: "無料資料あり",
-    cta: "おすすめ講座を見る",
-    url: affiliateUrls.qualification,
-    description:
-      "資格や専門スキルを身につけることで、今の仕事を続けながら選択肢を増やしやすくなります。",
-    purpose: "安定を守りながら増やせるスキル候補を知る",
-    benefits: ["将来に強いスキル", "資格や講座の候補", "無理のない学習ペース", "今の仕事への活かし方"],
-    recommendedFor: ["大きなリスクは取りたくない", "着実に準備したい", "長く使えるスキルを身につけたい"],
-    reason:
-      "環境を急に変えなくても、スキルを増やすことで選択肢は広がります。安定を大切にしたい人に合う進め方です。",
-  },
-  books: {
-    id: "books",
-    title: "本で学ぶ",
-    time: "約3分",
-    cost: "低コスト",
-    cta: "最初に読むべき本を見る",
-    url: affiliateUrls.books,
-    description:
-      "いきなりスクールや相談に進むのが不安な人は、まず本で考え方や知識を整理するのもおすすめです。",
-    purpose: "低コストで考え方や知識を整理する",
-    benefits: ["最初に読むべき本", "キャリアやお金の考え方", "AIや副業の基礎知識", "自分のペースで学ぶ入口"],
-    recommendedFor: ["まずは自分で考えたい", "相談や講座の前に基礎を知りたい", "低コストで始めたい"],
-    reason:
-      "本はすぐに大きな決断をしなくても始められる選択肢です。考え方を整理すると、次に見る情報を選びやすくなります。",
+      "迷っている状態で申し込むより、先に優先順位を整理した方が納得して行動しやすくなります。ここは行動前の準備として置いています。",
+    futureOptions: ["市場価値を確認して本業の可能性を見る", "副業スクールで会社以外の選択肢を見る", "必要なら本や無料情報で考え方を補強する"],
   },
 };

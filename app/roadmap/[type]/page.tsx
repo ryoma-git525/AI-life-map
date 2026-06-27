@@ -10,6 +10,9 @@ type PageProps = {
   params: Promise<{
     type: string;
   }>;
+  searchParams?: Promise<{
+    plan?: string;
+  }>;
 };
 
 export function generateStaticParams() {
@@ -32,13 +35,14 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function RoadmapPage({ params }: PageProps) {
+export default async function RoadmapPage({ params, searchParams }: PageProps) {
   const { type } = await params;
+  const query = await searchParams;
   const config = getRoadmapType(type);
 
   if (!config) notFound();
 
-  const steps = getRoadmapSteps(config.type);
+  const steps = getRoadmapSteps(config.type, query?.plan);
 
   return (
     <main className="min-h-screen px-4 py-5 text-ink sm:px-6">
@@ -82,12 +86,11 @@ export default async function RoadmapPage({ params }: PageProps) {
 
           <section className="rounded-[1.75rem] border border-sky-100 bg-white/85 p-5 shadow-soft sm:p-6">
             <p className="text-xs font-black tracking-[0.16em] text-sky-700">このページの役割</p>
-            <h2 className="mt-2 text-2xl font-black text-slate-950">この順番をおすすめする理由</h2>
+            <h2 className="mt-2 text-2xl font-black text-slate-950">次に何をすると良いかを整理するページです</h2>
             <p className="mt-4 text-sm font-bold leading-8 text-slate-700">
               このページは広告ページではありません。診断結果をもとに作成した「あなた専用の行動プラン」です。
-              商品の紹介ではなく、次に何をすると良いかを中心に整理しています。
+              商品の紹介ではなく、今のあなたが次に見ておくと判断しやすくなる選択肢だけをまとめています。
             </p>
-            <p className="mt-4 text-sm font-bold leading-8 text-slate-700">{config.reason}</p>
           </section>
 
           <section id="roadmap" className="rounded-[2rem] border border-sky-100 bg-gradient-to-b from-white to-sky-50/60 p-4 shadow-glow sm:p-6">
