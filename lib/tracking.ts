@@ -1,9 +1,8 @@
-import type { RoadmapType, StepCategory } from "@/types/roadmap";
+import type { CtaType, RoadmapType } from "@/types/roadmap";
 
 type AffiliateClickPayload = {
   roadmapType: RoadmapType;
-  stepCategory: StepCategory;
-  stepTitle: string;
+  ctaType: CtaType;
   targetUrl: string;
 };
 

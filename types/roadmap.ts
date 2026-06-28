@@ -1,34 +1,34 @@
-export type RoadmapType = "market-value" | "ai-skill" | "side-business" | "career" | "stability";
+export type RoadmapType = "stability" | "workstyle" | "organize";
 
-export type StepCategory = "career_agent" | "side_business" | "learn_ai" | "read_books" | "organize_options";
+export type CtaType = "career_agent" | "side_business";
 
 export type RoadmapStep = {
-  id: StepCategory;
   title: string;
-  time: string;
-  cost: string;
-  cta?: string;
-  url?: string;
-  description: string;
-  purpose: string;
-  benefits: string[];
-  recommendedFor: string[];
-  reason: string;
-  futureOptions: string[];
+  body: string;
 };
 
-export type RoadmapTypeConfig = {
+export type FinalCta = {
+  type: CtaType;
+  button: string;
+  note: string;
+  url: string;
+};
+
+export type Roadmap = {
   type: RoadmapType;
+  title: string;
   resultName: string;
-  firstStep: string;
-  diagnosisComment: string;
-  reason: string;
-  order: StepCategory[];
+  description: string;
+  tendency: string;
+  steps: RoadmapStep[];
+  defaultCtaType: CtaType;
   accent: string;
 };
 
-export type RankedRoadmapStep = RoadmapStep & {
-  rank: number;
-  priority: string;
-  stepComment: string;
+export type DiagnosisScores = {
+  stability: number;
+  workstyle: number;
+  organize: number;
+  career_agent: number;
+  side_business: number;
 };

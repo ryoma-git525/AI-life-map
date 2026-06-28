@@ -1,7 +1,20 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./data/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  safelist: [
+    "from-emerald-400",
+    "from-sky-400",
+    "from-violet-400",
+    "to-sky-500",
+    "to-blue-600",
+    "to-violet-400",
+  ],
   theme: {
     extend: {
       colors: {

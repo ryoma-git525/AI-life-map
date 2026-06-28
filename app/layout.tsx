@@ -1,18 +1,17 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "AI人生設計図",
-  description: "今の状況と理想の未来から、あなたに合う行動ルートを無料で診断します。",
+  description: "今の状況から、あなたに合う最初の一歩を整理するロードマップサービスです。",
 };
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#F7FAFF",
-};
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: ReactNode;
+}>) {
   return (
     <html lang="ja">
       <body>{children}</body>
