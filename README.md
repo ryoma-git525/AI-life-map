@@ -22,8 +22,8 @@ pnpm dev
 VercelのEnvironment Variablesに以下を設定してください。
 
 ```bash
-NEXT_PUBLIC_AFFILIATE_CAREER_AGENT_URL=https://example.com/career-agent
-NEXT_PUBLIC_AFFILIATE_SIDE_BUSINESS_URL=https://example.com/side-business
+NEXT_PUBLIC_AFFILIATE_CAREER_AGENT_URL=https://px.a8.net/svt/ejp?a8mat=4B65SI+2MNYQI+5P1E+5YRHE
+NEXT_PUBLIC_AFFILIATE_SIDE_BUSINESS_URL=https://px.a8.net/svt/ejp?a8mat=4B65SI+3I7XSQ+4V0U+ZRIB5
 ```
 
 診断結果画面から外部URLへ直接遷移せず、ロードマップの最後にある1つのCTAだけが外部URLへ遷移します。
